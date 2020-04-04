@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listmaker.MainTab.DatabaseHelper
 import com.example.listmaker.Month.MonthAdapter
@@ -28,7 +25,7 @@ class ItemsAdapter(
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var item = itemview.findViewById<TextView>(R.id.item_txt)
         var item_price = itemview.findViewById<TextView>(R.id.item_price_txt)
-        val delete = itemview.findViewById<ImageView>(R.id.delete_item)
+        val delete = itemview.findViewById<Button>(R.id.delete_item)
     }
     lateinit var item_price:String
     lateinit var item:String
