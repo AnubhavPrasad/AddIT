@@ -107,7 +107,10 @@ class MainPage : Fragment() {
                 R.id.itemprice_et
             )?.text.toString()
             var item= bottom_sheetdia.findViewById<EditText>(R.id.item_et)?.text.toString()
-            if (itemprice.length > 0&&item.length>0) {
+            if (itemprice.length > 0||item.length>0) {
+                if(itemprice.length==0){
+                    itemprice="0"
+                }
                 Log.i("i", "called111")
                 datelist = db.readdata()
                 monthlist = db.monthread()
