@@ -2,9 +2,11 @@ package com.example.listmaker.MainTab
 
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.listmaker.DAY.*
@@ -20,9 +23,14 @@ import com.example.listmaker.MainActivity
 import com.example.listmaker.Month.*
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentTabbedBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
+var outputdate:String=""
+var outputmonth:String=""
 class TabbedFragment : Fragment() {
     lateinit var binding: FragmentTabbedBinding
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +69,23 @@ class TabbedFragment : Fragment() {
                             .setText(limit.monthwise_limit.toString())
                     }
                     limit_dialog.show()
+                }
+                R.id.add_particular->{
+                    val datePickerDialog=DatePickerDialog(context!!)
+                    datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+                        val inputstr= "$dayOfMonth-${month+1}-$year"
+                        val inputfor=SimpleDateFormat("d-M-yyyy")
+                        val outputfor=SimpleDateFormat("dd-MMM-yyyy")
+                        val date=inputfor.parse(inputstr)
+                        outputdate=outputfor.format(date)
+                        val inputmonth="${month+1}"
+                        val inputform=SimpleDateFormat("M")
+                        val outform=SimpleDateFormat("MMMM")
+                        val month=inputform.parse(inputmonth)
+                        outputmonth=outform.format(month)
+                        bottom_sheetdia.show()
+                    }
+                    datePickerDialog.show()
                 }
             }
             true

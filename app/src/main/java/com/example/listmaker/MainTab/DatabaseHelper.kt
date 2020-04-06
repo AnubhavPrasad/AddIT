@@ -263,7 +263,7 @@ class DatabaseHelper(var context: Context) : SQLiteOpenHelper(context,
     }
     fun itemdelspec(item:String,item_price:String){
         val db=writableDatabase
-        db.delete(TABLE_NAME4,"$ITEM='$item' AND $ITEM_PRICE='$item_price'",null)
+        db.delete(TABLE_NAME4, "$ITEM='$item' AND $ITEM_PRICE='$item_price'",null)
         db.close()
     }
     fun deductitem(item_price: String, date: String,date_value:String){

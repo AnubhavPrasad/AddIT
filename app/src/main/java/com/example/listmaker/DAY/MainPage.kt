@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listmaker.MainTab.DatabaseHelper
+import com.example.listmaker.MainTab.outputdate
+import com.example.listmaker.MainTab.outputmonth
 import com.example.listmaker.Month.MonthAdapter
 import com.example.listmaker.Month.MonthData
 import com.example.listmaker.Month.dia_alldays
@@ -35,7 +37,7 @@ lateinit var bottom_sheetdia: BottomSheetDialog     //Bottom sheet dialog that a
 lateinit var monthlist: MutableList<MonthData>      //list of month data
 lateinit var datelist: MutableList<Data>        //list of days data
 lateinit var itemrec:RecyclerView
-class MainPage() : Fragment() {
+class MainPage : Fragment() {
     lateinit var binding: FragmentMainPageBinding
     private var itemprice = ""
 
@@ -96,7 +98,6 @@ class MainPage() : Fragment() {
         bottom_sheetdia.findViewById<ImageView>(
             R.id.close
         )?.setOnClickListener {
-            Log.i("i", "close")
             bottom_sheetdia.dismiss()
         }
         bottom_sheetdia.findViewById<FloatingActionButton>(
@@ -112,10 +113,20 @@ class MainPage() : Fragment() {
                 monthlist = db.monthread()
                 val getdate = Calendar.getInstance().time
                 val dateformat = SimpleDateFormat("dd-MMM-yyyy")
-                val date = dateformat.format(getdate)
+                var date=""
+                date = if(outputdate=="") {
+                    dateformat.format(getdate)
+                }else{
+                    outputdate
+                }
                 val datemonthfor = SimpleDateFormat("MMMM")
-                val datemonth = datemonthfor.format(getdate)
-                val monthData = MonthData(
+                var datemonth:String=""
+                if(outputmonth=="") {
+                    datemonth = datemonthfor.format(getdate)
+                }else{
+                    datemonth= outputmonth
+                }
+                    val monthData = MonthData(
                     0,
                     itemprice,
                     datemonth
@@ -157,10 +168,19 @@ class MainPage() : Fragment() {
                     datelist,
                     datedialog_del
                 )
+                outputdate=""
+                outputmonth=""
+                bottom_sheetdia.findViewById<EditText>(
+                    R.id.item_et
+                )?.setText("")
+
+                bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
                 bottom_sheetdia.dismiss()
+
             } else {
                 Toast.makeText(context, "Enter Something", Toast.LENGTH_SHORT).show()
             }
+
         }
         return binding.root
     }
