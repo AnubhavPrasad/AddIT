@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,24 +18,28 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.listmaker.DAY.*
-import com.example.listmaker.MainActivity
-import com.example.listmaker.Month.*
+import com.example.listmaker.Month.MonthAdapter
+import com.example.listmaker.Month.dia_alldays
+import com.example.listmaker.Month.monthrecycler
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentTabbedBinding
 import java.text.SimpleDateFormat
-import java.util.*
 
-var outputdate:String=""
-var outputmonth:String=""
+var outputdate: String = ""
+var outputmonth: String = ""
+
 class TabbedFragment : Fragment() {
     lateinit var binding: FragmentTabbedBinding
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_tabbed, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_tabbed, container, false
+        )
         binding.maintoolbar.inflateMenu(R.menu.menu)
         val dia_delmonth = AlertDialog.Builder(context)
         dia_delmonth.create()
@@ -48,7 +51,9 @@ class TabbedFragment : Fragment() {
             childFragmentManager
         )
         binding.tabalyout.setupWithViewPager(binding.viewpager)
-        val db = DatabaseHelper(context!!)
+        val db = DatabaseHelper(
+            context!!
+        )
         datelist = db.readdata()
         binding.maintoolbar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -57,12 +62,16 @@ class TabbedFragment : Fragment() {
 
                 }
                 R.id.about -> {
-                   startActivity(Intent(context,
-                       AboutActivity::class.java))
+                    startActivity(
+                        Intent(
+                            context,
+                            AboutActivity::class.java
+                        )
+                    )
                 }
                 R.id.limit -> {
-                    val limit=db.limitread()
-                    if(limit.daywise_limit!= Int.MAX_VALUE&&limit.monthwise_limit!= Int.MAX_VALUE) {
+                    val limit = db.limitread()
+                    if (limit.daywise_limit != Int.MAX_VALUE && limit.monthwise_limit != Int.MAX_VALUE) {
                         limit_dialog.findViewById<EditText>(R.id.daylimit)
                             .setText(limit.daywise_limit.toString())
                         limit_dialog.findViewById<EditText>(R.id.monthlimit)
@@ -70,19 +79,19 @@ class TabbedFragment : Fragment() {
                     }
                     limit_dialog.show()
                 }
-                R.id.add_particular->{
-                    val datePickerDialog=DatePickerDialog(context!!)
+                R.id.add_particular -> {
+                    val datePickerDialog = DatePickerDialog(context!!)
                     datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
-                        val inputstr= "$dayOfMonth-${month+1}-$year"
-                        val inputfor=SimpleDateFormat("d-M-yyyy")
-                        val outputfor=SimpleDateFormat("dd-MMM-yyyy")
-                        val date=inputfor.parse(inputstr)
-                        outputdate=outputfor.format(date)
-                        val inputmonth="${month+1}"
-                        val inputform=SimpleDateFormat("M")
-                        val outform=SimpleDateFormat("MMMM")
-                        val month=inputform.parse(inputmonth)
-                        outputmonth=outform.format(month)
+                        val inputstr = "$dayOfMonth-${month + 1}-$year"
+                        val inputfor = SimpleDateFormat("d-M-yyyy")
+                        val outputfor = SimpleDateFormat("dd-MMM-yyyy")
+                        val date = inputfor.parse(inputstr)
+                        outputdate = outputfor.format(date)
+                        val inputmonth = "${month + 1}"
+                        val inputform = SimpleDateFormat("M")
+                        val outform = SimpleDateFormat("MMMM")
+                        val month = inputform.parse(inputmonth)
+                        outputmonth = outform.format(month)
                         bottom_sheetdia.show()
                     }
                     datePickerDialog.show()
@@ -119,7 +128,7 @@ class TabbedFragment : Fragment() {
                     limit_dialog.findViewById<EditText>(R.id.daylimit).text.toString().toInt()
                 val monthwise_limit =
                     limit_dialog.findViewById<EditText>(R.id.monthlimit).text.toString().toInt()
-                val limit= Limit(
+                val limit = Limit(
                     daywise_limit,
                     monthwise_limit
                 )

@@ -109,14 +109,14 @@ class DatabaseHelper(var context: Context) : SQLiteOpenHelper(context,
         Log.i("i", "update")
         val db = readableDatabase
         val cv = ContentValues()
-        cv.put(COL_VALUE, mainvalue.toInt()+(new.toInt()-prev.toInt()))
+        cv.put(COL_VALUE, mainvalue.toLong()+(new.toLong()-prev.toLong()))
         db.update(TABLE_NAME, cv, "$COL_DATE='$date'", null)
         db.close()
     }
     fun updatedata(prev: String, new: String, date: String,itemData: ItemData,month:String) {
         val db = readableDatabase
         val cv = ContentValues()
-        val sum = prev.toInt() + new.toInt()
+        val sum = prev.toLong() + new.toLong()
         val sumstr = sum.toString()
         cv.put(COL_VALUE, sumstr)
         db.update(TABLE_NAME, cv, "$COL_DATE='$date'", null)
