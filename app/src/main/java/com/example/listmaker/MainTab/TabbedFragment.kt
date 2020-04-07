@@ -96,6 +96,14 @@ class TabbedFragment : Fragment() {
                     }
                     datePickerDialog.show()
                 }
+                R.id.contact -> {
+                    val intent = Intent(Intent.ACTION_SEND)
+                    val recipients = arrayOf("anubhavprasad89@gmail.com")
+                    intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+                    intent.type = "text/html"
+                    intent.setPackage("com.google.android.gm")
+                    startActivity(Intent.createChooser(intent, "Send mail"))
+                }
             }
             true
         }
