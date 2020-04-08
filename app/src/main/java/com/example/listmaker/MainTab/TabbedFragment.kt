@@ -1,6 +1,5 @@
 package com.example.listmaker.MainTab
 
-
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -17,7 +16,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.listmaker.DAY.*
+import com.example.listmaker.MainActivity
 import com.example.listmaker.Month.MonthAdapter
 import com.example.listmaker.Month.dia_alldays
 import com.example.listmaker.Month.monthrecycler
@@ -155,6 +156,7 @@ class TabbedFragment : Fragment() {
         }
         return binding.root
     }
+
 
 
 }
