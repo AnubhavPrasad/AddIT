@@ -24,6 +24,7 @@ import com.example.listmaker.Month.dia_alldays
 import com.example.listmaker.Month.monthrecycler
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentTabbedBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 
 var outputdate: String = ""
@@ -81,6 +82,13 @@ class TabbedFragment : Fragment() {
                     limit_dialog.show()
                 }
                 R.id.add_particular -> {
+                    bottom_sheetdia.findViewById<EditText>(
+                        R.id.item_et
+                    )?.setText("")
+
+                    bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
+                    bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility=View.GONE
+                    bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility=View.VISIBLE
                     val datePickerDialog = DatePickerDialog(context!!)
                     datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
                         val inputstr = "$dayOfMonth-${month + 1}-$year"
@@ -88,9 +96,9 @@ class TabbedFragment : Fragment() {
                         val outputfor = SimpleDateFormat("dd-MMM-yyyy")
                         val date = inputfor.parse(inputstr)
                         outputdate = outputfor.format(date)
-                        val inputmonth = "${month + 1}"
-                        val inputform = SimpleDateFormat("M")
-                        val outform = SimpleDateFormat("MMMM")
+                        val inputmonth = "${month + 1}-$year"
+                        val inputform = SimpleDateFormat("M-yyyy")
+                        val outform = SimpleDateFormat("MMMM-yyyy")
                         val month = inputform.parse(inputmonth)
                         outputmonth = outform.format(month)
                         bottom_sheetdia.show()

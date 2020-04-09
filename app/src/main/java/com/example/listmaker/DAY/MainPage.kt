@@ -122,7 +122,7 @@ class MainPage : Fragment() {
                 }else{
                     outputdate
                 }
-                val datemonthfor = SimpleDateFormat("MMMM")
+                val datemonthfor = SimpleDateFormat("MMMM-yyyy")
                 var datemonth:String=""
                 if(outputmonth=="") {
                     datemonth = datemonthfor.format(getdate)

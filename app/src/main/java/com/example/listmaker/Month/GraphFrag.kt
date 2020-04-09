@@ -33,20 +33,42 @@ class GraphFrag : Fragment() {
         graph.setDrawBarShadow(false)
         graph.isDoubleTapToZoomEnabled = false
         val barentries = arrayListOf<BarEntry>()
+        var graphdata = GraphData()
+        var graphlist = mutableListOf<GraphData>()
         for (i in 0 until monthlist.size) {
-            when (monthlist[i].month) {
-                "January" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 0))
-                "February" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 1))
-                "March" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 2))
-                "April" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 3))
-                "May" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 4))
-                "June" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 5))
-                "July" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 6))
-                "August" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 7))
-                "September" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 8))
-                "October" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 9))
-                "November" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 10))
-                "December" -> barentries.add(BarEntry(monthlist[i].monthvalue.toFloat(), 11))
+            var k = 0
+            for (j in 0 until graphlist.size) {
+                if (graphlist[j].month == monthlist[i].month.dropLast(5)) {
+                    graphdata = GraphData(
+                        (graphlist[j].value.toInt() + monthlist[i].monthvalue.toInt()).toString(),
+                        monthlist[i].month.dropLast(5)
+                    )
+                    graphlist.remove(graphlist[j])
+                    graphlist.add(graphdata)
+                    k++
+                    break
+                }
+            }
+            if (k == 0) {
+                graphdata = GraphData(monthlist[i].monthvalue, monthlist[i].month.dropLast(5))
+                graphlist.add(graphdata)
+            }
+        }
+
+        for (i in 0 until graphlist.size) {
+            when (graphlist[i].month) {
+                "January" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 0))
+                "February" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 1))
+                "March" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 2))
+                "April" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 3))
+                "May" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 4))
+                "June" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 5))
+                "July" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 6))
+                "August" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 7))
+                "September" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 8))
+                "October" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 9))
+                "November" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 10))
+                "December" -> barentries.add(BarEntry(graphlist[i].value.toFloat(), 11))
             }
         }
         val dates = arrayListOf<String>()

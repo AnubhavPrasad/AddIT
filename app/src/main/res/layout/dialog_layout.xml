@@ -69,19 +69,21 @@
 
     <ImageView
         android:id="@+id/close"
-        android:layout_width="52dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
         android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:paddingRight="10dp"
+        android:paddingBottom="5dp"
         android:src="@drawable/ic_close_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/item_et"
         app:layout_constraintEnd_toStartOf="@+id/bt_add"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <EditText
         android:id="@+id/itemprice_et"
