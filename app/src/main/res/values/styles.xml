@@ -15,4 +15,8 @@
 <style name="floating" parent="Theme.AppCompat.Light">
     <item name="colorAccent">#F7B5CC</item>
 </style>
+    <style name="DailogScale">
+        <item name="android:windowEnterAnimation">@anim/scale_in</item>
+        <item name="android:windowExitAnimation">@anim/scale_out</item>
+    </style>
 </resources>

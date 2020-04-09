@@ -30,6 +30,7 @@ class MonthAdapter(var alldaysdia: Dialog) : RecyclerView.Adapter<MonthAdapter.M
             LinearLayoutManager(parent.context)
         dialog = AlertDialog.Builder(parent.context)
         dialog.setTitle("Delete")
+        alldaysdia.window!!.attributes.windowAnimations = R.style.DailogScale
         dialog.setMessage("Are you Sure? Days contributing to it will also be deleted.")
         dialog.create()
         return MyViewHolder(view)
