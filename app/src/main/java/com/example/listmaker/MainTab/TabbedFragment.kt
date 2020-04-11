@@ -130,13 +130,12 @@ class TabbedFragment : Fragment() {
                 datedialog_del
             )
             if (datelist.size == 0) {
-                itemrec.visibility = View.GONE
+                dayitemrec.visibility = View.GONE
                 add_text.visibility = View.VISIBLE
             }
             d1.dismiss()
         }
         dia_delmonth.setNegativeButton("CLOSE") { d2, _ ->
-            Log.i("if", "ok")
             d2.dismiss()
         }
         limit_dialog.findViewById<Button>(R.id.set_bt).setOnClickListener {

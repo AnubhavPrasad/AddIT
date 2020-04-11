@@ -184,6 +184,7 @@ class DatabaseHelper(var context: Context) : SQLiteOpenHelper(context,
     }
 
     fun deductmonth(monthvalue: String, dayvalue: String, month: String) {
+        Log.i("f",dayvalue)
         val db = writableDatabase
         val cv = ContentValues()
         cv.put(COL_VALUE2, monthvalue.toInt() - dayvalue.toInt())

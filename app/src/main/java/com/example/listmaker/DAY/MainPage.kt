@@ -38,7 +38,7 @@ lateinit var datedialog_del: AlertDialog.Builder     //Alert Dialog for delete o
 lateinit var bottom_sheetdia: BottomSheetDialog     //Bottom sheet dialog that appears from below
 lateinit var monthlist: MutableList<MonthData>      //list of month data
 lateinit var datelist: MutableList<Data>        //list of days data
-lateinit var itemrec:RecyclerView
+lateinit var dayitemrec:RecyclerView
 lateinit var add_txt:TextView
 
 class MainPage : Fragment() {
@@ -63,7 +63,7 @@ class MainPage : Fragment() {
         datedialog_del.setTitle("Delete")
         datedialog_del.setMessage("Are you sure? It will automatically deduct from month.")
         daterecycler = binding.recycler
-        itemrec=binding.recycler
+        dayitemrec=binding.recycler
         add_txt=binding.addText
         datelist = db.readdata()
         binding.recycler.layoutManager = LinearLayoutManager(context!!)
@@ -119,6 +119,9 @@ class MainPage : Fragment() {
                 false
             }
         }
+
+
+
         return binding.root
     }
 

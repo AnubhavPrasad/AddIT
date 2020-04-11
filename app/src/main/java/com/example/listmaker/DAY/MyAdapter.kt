@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
+import android.view.*
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.findNavController
@@ -19,36 +16,41 @@ import com.example.listmaker.Month.MonthAdapter
 import com.example.listmaker.Month.dia_alldays
 import com.example.listmaker.Month.monthrecycler
 import com.example.listmaker.R
-import com.github.mikephil.charting.charts.PieChart
-import com.google.android.material.bottomsheet.BottomSheetDialog
-lateinit var items:MutableList<ItemData>
+
+lateinit var items: MutableList<ItemData>
+
 class MyAdapter(
     var list: MutableList<Data>,
     var dialog: AlertDialog.Builder
 
-) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-    lateinit var del: String
-    lateinit var itemsdia:Dialog
-    lateinit var itemrec:RecyclerView
+) : RecyclerView.Adapter<MyAdapter.MyViewHolder>(), ActionMode.Callback {
+    lateinit var monthdel: String
+    var action_mode: ActionMode? = null
+    lateinit var itemsdia: Dialog
+    lateinit var itemrec: RecyclerView
+    lateinit var multiple_del: MutableList<MultipleDel>
+    var mActionMode: ActionMode? = null
+
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var value = itemview.findViewById<TextView>(R.id.text)
         var bt = itemview.findViewById<ImageView>(R.id.bt_delete)
         val date = itemview.findViewById<TextView>(R.id.date)
-        val pie=itemview.findViewById<ImageView>(R.id.pie_image)
+        val checkBox = itemview.findViewById<CheckBox>(R.id.bt_check)
+        val pie = itemview.findViewById<ImageView>(R.id.pie_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
-        itemsdia= Dialog(parent.context)
+        itemsdia = Dialog(parent.context)
         itemsdia.setContentView(R.layout.all_items)
-        itemrec=itemsdia.findViewById(R.id.items_recycler)
+        itemrec = itemsdia.findViewById(R.id.items_recycler)
         return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         if (list.size == 0) {
-            itemrec.visibility = View.GONE
+            dayitemrec.visibility = View.GONE
             add_txt.visibility = View.VISIBLE
         }
         return list.size
@@ -60,6 +62,27 @@ class MyAdapter(
             DatabaseHelper(holder.itemView.context)
         datelist = db.readdata()
         val limit = db.limitread()
+
+        if (mActionMode == null) {
+            holder.bt.visibility = View.VISIBLE
+             holder.itemView.isSelected = false
+            holder.checkBox.isChecked = false
+            holder.checkBox.visibility = View.GONE
+            holder.bt.setOnClickListener {
+                multiple_del = mutableListOf()
+                multiple_del.add(
+                    MultipleDel(
+                        list[position].date,
+                        list[position].month,
+                        list[position].value
+                    )
+                )
+                dialog.show()
+            }
+        } else {
+            holder.bt.visibility = View.INVISIBLE
+            holder.checkBox.visibility=View.VISIBLE
+        }
         holder.value.text = "\u20B9 " + list[position].value
         holder.date.text = list[position].date
         if (list[position].value.toInt() > limit.daywise_limit) {
@@ -67,44 +90,129 @@ class MyAdapter(
         } else {
             holder.value.setTextColor(Color.BLACK)
         }
-
-        holder.bt.setOnClickListener {
-            del = holder.date.text.toString()
-            dialog.show()
+        holder.pie.setOnClickListener {
+            if (mActionMode == null) {
+                items = db.readitems(holder.date.text.toString())
+                holder.itemView.findNavController()
+                    .navigate(R.id.action_tabbedFragment_to_pieFragment2)
+            }
+        }
+        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                multiple_del.add(
+                    MultipleDel(
+                        list[position].date,
+                        list[position].month,
+                        list[position].value
+                    )
+                )
+                holder.itemView.isSelected=true
+            }
+            else{
+                multiple_del.remove(
+                    MultipleDel(
+                        list[position].date,
+                        list[position].month,
+                        list[position].value
+                    )
+                )
+                holder.itemView.isSelected = false
+            }
+        }
+        holder.itemView.setOnLongClickListener {
+            multiple_del = mutableListOf()
+            if (mActionMode != null) {
+                false
+            } else {
+                holder.checkBox.isChecked=true
+                holder.itemView.isSelected=true
+                mActionMode = holder.itemView.startActionMode(this)
+                notifyDataSetChanged()
+                true
+            }
         }
         holder.itemView.setOnClickListener {
-            items=db.readitems(holder.date.text.toString())
-            itemrec.layoutManager=LinearLayoutManager(holder.itemView.context)
-            itemrec.adapter=ItemsAdapter(items,holder.date.text.toString(),list[position].value,list[position].month)
-            itemsdia.show()
+            items = db.readitems(holder.date.text.toString())
+            if (mActionMode != null && !holder.itemView.isSelected) {
+
+                holder.checkBox.isChecked=true
+               holder.itemView.isSelected = true
+            } else if (mActionMode != null && holder.itemView.isSelected) {
+                holder.checkBox.isChecked=false
+                holder.itemView.isSelected = false
+            } else {
+                itemrec.layoutManager = LinearLayoutManager(holder.itemView.context)
+                itemrec.adapter = ItemsAdapter(
+                    items,
+                    holder.date.text.toString(),
+                    list[position].value,
+                    list[position].month
+                )
+                itemsdia.show()
+            }
         }
-        holder.pie.setOnClickListener {
-            items=db.readitems(holder.date.text.toString())
-            holder.itemView.findNavController().navigate(R.id.action_tabbedFragment_to_pieFragment2)
-        }
+
         dialog.setPositiveButton("YES") { dialog, _ ->
             for (i in monthlist) {
-                if (i.month == list[position].month) {
-                    db.deductmonth(i.monthvalue, list[position].value, i.month)
-
+                var sum = 0
+                for (j in multiple_del) {
+                    if (i.month == j.month) {
+                        sum += j.value.toInt()
+                    }
                 }
+                db.deductmonth(i.monthvalue, sum.toString(), i.month)
             }
-            monthlist = db.monthread()
+
             monthrecycler.adapter = MonthAdapter(
                 dia_alldays
             )
-            db.itemdel(del)
-            db.readitems(holder.date.text.toString())
-            db.deletespec(del)
+            for (i in multiple_del) {
+                db.itemdel(i.date)
+                db.deletespec(i.date)
+            }
             list = db.readdata()
             notifyDataSetChanged()
             db.close()
+            if(list.size==0){
+                dayitemrec.visibility = View.GONE
+                add_txt.visibility = View.VISIBLE
+            }
             dialog.dismiss()
+            if (action_mode != null) {
+                action_mode?.finish()
+                action_mode = null
+                mActionMode = null
+            }
         }
         dialog.setNegativeButton("CLOSE") { dialog, _ ->
             dialog.dismiss()
         }
 
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.sel_del -> {
+                dialog.show()
+                action_mode = mode
+            }
+        }
+        return true
+    }
+
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        mode?.menuInflater?.inflate(R.menu.contextual_menu, menu)
+        return true
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        return false
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        mActionMode = null
+        multiple_del = mutableListOf()
+        notifyDataSetChanged()
     }
 
 }
