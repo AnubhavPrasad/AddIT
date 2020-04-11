@@ -25,6 +25,7 @@ import com.example.listmaker.Month.monthrecycler
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentTabbedBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_main_page.*
 import java.text.SimpleDateFormat
 
 var outputdate: String = ""
@@ -85,7 +86,6 @@ class TabbedFragment : Fragment() {
                     bottom_sheetdia.findViewById<EditText>(
                         R.id.item_et
                     )?.setText("")
-
                     bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
                     bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility=View.GONE
                     bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility=View.VISIBLE
@@ -117,7 +117,6 @@ class TabbedFragment : Fragment() {
             true
         }
         dia_delmonth.setPositiveButton("OK") { d1, _ ->
-            Log.i("if", "called")
             db.deletedata()
             db.monthdel()
             db.delallitem()
@@ -130,6 +129,10 @@ class TabbedFragment : Fragment() {
                 datelist,
                 datedialog_del
             )
+            if (datelist.size == 0) {
+                itemrec.visibility = View.GONE
+                add_text.visibility = View.VISIBLE
+            }
             d1.dismiss()
         }
         dia_delmonth.setNegativeButton("CLOSE") { d2, _ ->

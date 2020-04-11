@@ -47,7 +47,10 @@ class MyAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.i("pu", list.size.toString())
+        if (list.size == 0) {
+            itemrec.visibility = View.GONE
+            add_txt.visibility = View.VISIBLE
+        }
         return list.size
     }
 
@@ -70,12 +73,10 @@ class MyAdapter(
             dialog.show()
         }
         holder.itemView.setOnClickListener {
-            Log.i("inside", "clicked")
             items=db.readitems(holder.date.text.toString())
             itemrec.layoutManager=LinearLayoutManager(holder.itemView.context)
             itemrec.adapter=ItemsAdapter(items,holder.date.text.toString(),list[position].value,list[position].month)
             itemsdia.show()
-            Log.i("inside","show")
         }
         holder.pie.setOnClickListener {
             items=db.readitems(holder.date.text.toString())
