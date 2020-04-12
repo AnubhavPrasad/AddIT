@@ -85,7 +85,9 @@ class MainPage : Fragment() {
             )?.setText("")
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility=View.GONE
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility=View.VISIBLE
-            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.visibility=View.VISIBLE
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setText("")
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.visibility=View.INVISIBLE
             bottom_sheetdia.show()
         }
         binding.addText.setOnClickListener {
@@ -97,7 +99,9 @@ class MainPage : Fragment() {
             )?.setText("")
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility=View.GONE
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility=View.VISIBLE
-            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.visibility=View.VISIBLE
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setText("")
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.visibility=View.INVISIBLE
             bottom_sheetdia.show()
         }
 
@@ -116,11 +120,19 @@ class MainPage : Fragment() {
             }
            add_data(db)
         }
-        bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setOnKeyListener { v, keyCode, event ->
-            if(keyCode==KeyEvent.KEYCODE_ENTER){
+        bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setOnKeyListener { view: View, i: Int, keyEvent: KeyEvent ->
+//            var handler=false
+//            if(event.action==KeyEvent.ACTION_DOWN) {
+//                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+//                    add_data(db)
+//                    handler=true
+//                }
+//            }
+//            handler
+            if (keyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
                 add_data(db)
                 true
-            }else{
+            } else {
                 false
             }
         }
@@ -132,7 +144,7 @@ class MainPage : Fragment() {
 
     fun add_data(db:DatabaseHelper){
         itemprice = bottom_sheetdia.findViewById<EditText>(
-            R.id.itemprice_et
+            R.id.itemprice_add
         )?.text.toString()
         var item= bottom_sheetdia.findViewById<EditText>(R.id.item_et)?.text.toString()
         if (itemprice.length > 0||item.length>0) {

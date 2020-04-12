@@ -54,7 +54,6 @@ class ItemsAdapter(
         holder.item_price.text = list[position].itemprice
         holder.itemView.setOnClickListener {
             bottom_sheetdia.show()
-            Log.i("q", "in")
             val previtem = holder.item.text.toString()
             val previtemprice = holder.item_price.text.toString()
             val item = bottom_sheetdia.findViewById<EditText>(R.id.item_et)
@@ -64,6 +63,8 @@ class ItemsAdapter(
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility = View.GONE
             bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility =
                 View.VISIBLE
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.visibility=View.VISIBLE
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.visibility=View.INVISIBLE
             val bt = bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)
             bottom_sheetdia.findViewById<TextView>(R.id.textView)?.text = "EDIT"
             bt?.setOnClickListener {
@@ -88,6 +89,11 @@ class ItemsAdapter(
             db.itemdelspec(item, item_price)
             list = db.readitems(date)
             notifyDataSetChanged()
+            for(i in datelist){
+                if(i.date==date){
+                    mainvalue=i.value
+                }
+            }
             db.deductitem(item_price, date, mainvalue)
             datelist = db.readdata()
             daterecycler.adapter = MyAdapter(datelist, datedialog_del)
@@ -126,6 +132,11 @@ class ItemsAdapter(
                 item_price?.text.toString(),
                 item?.text.toString()
             )
+            for(i in datelist){
+                if(i.date==date){
+                    mainvalue=i.value
+                }
+            }
             db.editdata(previtemprice, item_price?.text.toString(), mainvalue, date)
             datelist = db.readdata()
             for (i in monthlist) {
