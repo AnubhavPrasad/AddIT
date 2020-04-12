@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.listmaker.DAY.action_mode
+import com.example.listmaker.DAY.mActionMode
 import com.example.listmaker.MainTab.DatabaseHelper
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentMonthWiseBinding
@@ -46,6 +48,11 @@ class MonthWiseFrag : Fragment() {
         monthrecycler.adapter =
             MonthAdapter(dia_alldays)
         binding.graphBt.setOnClickListener {
+            if(action_mode !=null){
+                action_mode?.finish()
+                action_mode = null
+                mActionMode = null
+            }
             findNavController().navigate(R.id.action_tabbedFragment_to_graphFrag)
         }
         return binding.root

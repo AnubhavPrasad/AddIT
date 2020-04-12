@@ -109,6 +109,11 @@ class MainPage : Fragment() {
         bottom_sheetdia.findViewById<FloatingActionButton>(
             R.id.bt_add
         )?.setOnClickListener {
+            if(action_mode!=null){
+                action_mode?.finish()
+                action_mode = null
+                mActionMode = null
+            }
            add_data(db)
         }
         bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setOnKeyListener { v, keyCode, event ->
@@ -148,7 +153,8 @@ class MainPage : Fragment() {
             var datemonth:String=""
             if(outputmonth=="") {
                 datemonth = datemonthfor.format(getdate)
-            }else{
+            }
+            else{
                 datemonth= outputmonth
             }
             val monthData = MonthData(

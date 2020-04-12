@@ -18,18 +18,19 @@ import com.example.listmaker.Month.monthrecycler
 import com.example.listmaker.R
 
 lateinit var items: MutableList<ItemData>
-
+var action_mode: ActionMode? = null
+var mActionMode: ActionMode? = null
 class MyAdapter(
     var list: MutableList<Data>,
     var dialog: AlertDialog.Builder
 
 ) : RecyclerView.Adapter<MyAdapter.MyViewHolder>(), ActionMode.Callback {
     lateinit var monthdel: String
-    var action_mode: ActionMode? = null
+
     lateinit var itemsdia: Dialog
     lateinit var itemrec: RecyclerView
     lateinit var multiple_del: MutableList<MultipleDel>
-    var mActionMode: ActionMode? = null
+
 
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var value = itemview.findViewById<TextView>(R.id.text)
@@ -194,7 +195,7 @@ class MyAdapter(
         when (item?.itemId) {
             R.id.sel_del -> {
                 dialog.show()
-                action_mode = mode
+
             }
         }
         return true
@@ -202,6 +203,7 @@ class MyAdapter(
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.menuInflater?.inflate(R.menu.contextual_menu, menu)
+        action_mode = mode
         return true
     }
 

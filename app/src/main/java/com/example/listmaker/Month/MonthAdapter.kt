@@ -62,6 +62,11 @@ class MonthAdapter(var alldaysdia: Dialog) : RecyclerView.Adapter<MonthAdapter.M
             d1.dismiss()
         }
         dialog.setPositiveButton("OK") { d2, _ ->
+            if(action_mode !=null){
+                action_mode?.finish()
+                action_mode = null
+                mActionMode = null
+            }
             db.monthdelspec(del)
             for(i in datelist){
                 if(i.month== del){
