@@ -5,13 +5,13 @@
     android:layout_width="400dp"
     android:layout_height="700dp">
 <ScrollView
+    android:background="#FFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alldays_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
