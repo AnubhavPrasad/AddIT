@@ -20,6 +20,7 @@ import com.example.listmaker.MainTab.DatabaseHelper
 import com.example.listmaker.R
 import com.example.listmaker.databinding.FragmentMonthWiseBinding
 import com.example.listmaker.DAY.monthlist
+import com.example.listmaker.MainTab.TabbedFragmentDirections
 
 lateinit var monthrecycler: RecyclerView        //  recyclerview for month-wise
 lateinit var dia_alldays: Dialog             //Dialog for click on a month item
@@ -53,7 +54,7 @@ class MonthWiseFrag : Fragment() {
                 action_mode = null
                 mActionMode = null
             }
-            findNavController().navigate(MonthWiseFragDirections.actionMonthWiseFragToGraphFrag())
+            findNavController().navigate(TabbedFragmentDirections.actionTabbedFragmentToGraphFrag())
         }
         return binding.root
 
