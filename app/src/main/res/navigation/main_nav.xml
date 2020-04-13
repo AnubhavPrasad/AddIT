@@ -40,5 +40,10 @@
     <fragment
         android:id="@+id/pieFragment"
         android:name="com.example.listmaker.DAY.PieFragment"
-        android:label="PieFragment" />
+        android:label="PieFragment" >
+        <argument
+            android:name="date"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

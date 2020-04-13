@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
+import android.os.Bundle
 import android.view.*
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listmaker.MainTab.DatabaseHelper
+import com.example.listmaker.MainTab.TabbedFragmentDirections
 import com.example.listmaker.Month.MonthAdapter
 import com.example.listmaker.Month.dia_alldays
 import com.example.listmaker.Month.monthrecycler
@@ -94,8 +96,10 @@ class MyAdapter(
         holder.pie.setOnClickListener {
             if (mActionMode == null) {
                 items = db.readitems(holder.date.text.toString())
+//                val args=Bundle()
+//                args.putString("date",holder.date.text.toString())
                 holder.itemView.findNavController()
-                    .navigate(R.id.action_tabbedFragment_to_pieFragment2)
+                    .navigate(TabbedFragmentDirections.actionTabbedFragmentToPieFragment2(holder.date.text.toString()))
             }
         }
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->

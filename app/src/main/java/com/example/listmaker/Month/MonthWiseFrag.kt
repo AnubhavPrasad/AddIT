@@ -53,7 +53,7 @@ class MonthWiseFrag : Fragment() {
                 action_mode = null
                 mActionMode = null
             }
-            findNavController().navigate(R.id.action_tabbedFragment_to_graphFrag)
+            findNavController().navigate(MonthWiseFragDirections.actionMonthWiseFragToGraphFrag())
         }
         return binding.root
 

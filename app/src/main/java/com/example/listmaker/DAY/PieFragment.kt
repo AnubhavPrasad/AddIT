@@ -25,7 +25,10 @@ class PieFragment : Fragment() {
         val pieChart = binding.pieChart
         val pientries = ArrayList<Entry>()
         val xval=ArrayList<String>()
-        pieChart.setDescription("Money Invested")
+        val args= arguments?.let { PieFragmentArgs.fromBundle(it) }
+        if (args != null) {
+            pieChart.setDescription("Money Invested:${args.date}")
+        }
         pieChart.setDescriptionTextSize(15f)
         pieChart.holeRadius=8f
         pieChart.setHoleColor(Color.WHITE)
