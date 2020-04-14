@@ -10,13 +10,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.listmaker.*
 import com.example.listmaker.DAY.*
 import com.example.listmaker.MainTab.DatabaseHelper
+import com.example.listmaker.R
 
 class MonthAdapter(var alldaysdia: Dialog) : RecyclerView.Adapter<MonthAdapter.MyViewHolder>() {
     lateinit var dialog: AlertDialog.Builder
-    lateinit var del:String
+    lateinit var del: String
+
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var month = itemview.findViewById<TextView>(R.id.date)
         var value = itemview.findViewById<TextView>(R.id.text)
@@ -43,65 +44,63 @@ class MonthAdapter(var alldaysdia: Dialog) : RecyclerView.Adapter<MonthAdapter.M
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val db =
             DatabaseHelper(holder.itemView.context)
-        monthlist=db.monthread()
-        val limit=db.limitread()
+        monthlist = db.monthread()
+        val limit = db.limitread()
         holder.month.text = monthlist[position].month
         holder.value.text = "\u20B9" + monthlist[position].monthvalue
         holder.delete.setOnClickListener {
-            del=holder.month.text.toString()
+            del = holder.month.text.toString()
             dialog.show()
         }
-        if(monthlist[position].monthvalue.toInt()> limit.monthwise_limit) {
+        if (monthlist[position].monthvalue.toInt() > limit.monthwise_limit) {
             holder.value.setTextColor(Color.parseColor("#E22323"))
-        }
-
-        else{
+        } else {
             holder.value.setTextColor(Color.BLACK)
         }
         dialog.setNegativeButton("CLOSE") { d1, _ ->
             d1.dismiss()
         }
         dialog.setPositiveButton("OK") { d2, _ ->
-            if(action_mode !=null){
+            if (action_mode != null) {
                 action_mode?.finish()
                 action_mode = null
                 mActionMode = null
             }
             db.monthdelspec(del)
-            for(i in datelist){
-                if(i.month== del){
+            for (i in datelist) {
+                if (i.month == del) {
                     db.delspecdays(i.month)
                 }
             }
-            datelist=db.readdata()
-            daterecycler.adapter=MyAdapter(datelist, datedialog_del)
+            datelist = db.readdata()
+            daterecycler.adapter = MyAdapter(datelist, datedialog_del)
             monthlist = db.monthread()
             notifyDataSetChanged()
             d2.dismiss()
         }
         holder.itemView.setOnClickListener {
-            val list = mutableListOf<Data>()
+            val list = arrayListOf<Data>()
             datelist = db.readdata()
             for (i in datelist) {
                 if (i.month == monthlist[position].month) {
                     list.add(i)
                 }
             }
-            for (i in 0 until list.size) {
-                for (j in i until list.size) {
-                    val f = list[i].date.take(2)
-                    val s = list[j].date.take(2)
-                    if (f > s) {
-                        val t = list[i]
-                        list[j] = list[i]
-                        list[i] = t
-                    }
-
-                }
-            }
-            alldaysdia.show()
+            val sortedlist=list.sortedWith(compareBy {it.date.take(2)})
+//            for (i in 0 until list.size) {
+//                for (j in i until list.size) {
+//                    val f = list[i].date.take(2)
+//                    val s = list[j].date.take(2)
+//                    if (f > s) {
+//                        val t = list[i]
+//                        list[i] = list[j]
+//                        list[j] = t
+//                    }
+//                }
+//            }
             alldaysdia.findViewById<RecyclerView>(R.id.alldays_recycler).adapter =
-                AllDaysAdapter(list)
+                AllDaysAdapter(sortedlist)
+            alldaysdia.show()
 
         }
     }

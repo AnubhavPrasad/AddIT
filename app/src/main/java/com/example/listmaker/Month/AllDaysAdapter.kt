@@ -1,16 +1,18 @@
 package com.example.listmaker.Month
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listmaker.DAY.Data
+import com.example.listmaker.DAY.datelist
 import com.example.listmaker.MainTab.DatabaseHelper
 import com.example.listmaker.R
 
-class AllDaysAdapter(var list: MutableList<Data>) :
+class AllDaysAdapter(var list: List<Data>) :
     RecyclerView.Adapter<AllDaysAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var date = itemView.findViewById<TextView>(R.id.date_alldays)
@@ -29,6 +31,8 @@ class AllDaysAdapter(var list: MutableList<Data>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val db=
             DatabaseHelper(holder.itemView.context)
+       // Log.i("all",list[position].value)
+        //Log.i("all", datelist[position].value)
         val limit=db.limitread()
         holder.date.text = list[position].date
         if(list[position].value.toInt()>limit.daywise_limit ){

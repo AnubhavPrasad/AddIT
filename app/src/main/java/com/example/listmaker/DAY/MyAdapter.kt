@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
-import android.os.Bundle
 import android.view.*
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -22,6 +21,7 @@ import com.example.listmaker.R
 lateinit var items: MutableList<ItemData>
 var action_mode: ActionMode? = null
 var mActionMode: ActionMode? = null
+
 class MyAdapter(
     var list: MutableList<Data>,
     var dialog: AlertDialog.Builder
@@ -68,23 +68,12 @@ class MyAdapter(
 
         if (mActionMode == null) {
             holder.bt.visibility = View.VISIBLE
-             holder.itemView.isSelected = false
+            holder.itemView.isSelected = false
             holder.checkBox.isChecked = false
             holder.checkBox.visibility = View.GONE
-            holder.bt.setOnClickListener {
-                multiple_del = mutableListOf()
-                multiple_del.add(
-                    MultipleDel(
-                        list[position].date,
-                        list[position].month,
-                        list[position].value
-                    )
-                )
-                dialog.show()
-            }
         } else {
             holder.bt.visibility = View.INVISIBLE
-            holder.checkBox.visibility=View.VISIBLE
+            holder.checkBox.visibility = View.VISIBLE
         }
         holder.value.text = "\u20B9 " + list[position].value
         holder.date.text = list[position].date
@@ -93,17 +82,36 @@ class MyAdapter(
         } else {
             holder.value.setTextColor(Color.BLACK)
         }
+        holder.bt.setOnClickListener {
+            multiple_del = mutableListOf()
+            multiple_del.add(
+                MultipleDel(
+                    list[position].date,
+                    list[position].month,
+                    list[position].value
+                )
+            )
+
+            dialog.show()
+        }
         holder.pie.setOnClickListener {
             if (mActionMode == null) {
                 items = db.readitems(holder.date.text.toString())
-//                val args=Bundle()
-//                args.putString("date",holder.date.text.toString())
                 holder.itemView.findNavController()
                     .navigate(TabbedFragmentDirections.actionTabbedFragmentToPieFragment2(holder.date.text.toString()))
             }
         }
+        holder.itemView.setOnLongClickListener {
+            multiple_del= mutableListOf()
+            val onlong=false
+            if(mActionMode==null){
+                mActionMode=holder.itemView.startActionMode(this)
+                notifyDataSetChanged()
+            }
+            onlong
+        }
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
+            if (isChecked) {
                 multiple_del.add(
                     MultipleDel(
                         list[position].date,
@@ -111,9 +119,8 @@ class MyAdapter(
                         list[position].value
                     )
                 )
-                holder.itemView.isSelected=true
-            }
-            else{
+                holder.itemView.isSelected = true
+            } else {
                 multiple_del.remove(
                     MultipleDel(
                         list[position].date,
@@ -124,26 +131,13 @@ class MyAdapter(
                 holder.itemView.isSelected = false
             }
         }
-        holder.itemView.setOnLongClickListener {
-            multiple_del = mutableListOf()
-            if (mActionMode != null) {
-                false
-            } else {
-                holder.checkBox.isChecked=true
-                holder.itemView.isSelected=true
-                mActionMode = holder.itemView.startActionMode(this)
-                notifyDataSetChanged()
-                true
-            }
-        }
         holder.itemView.setOnClickListener {
             items = db.readitems(holder.date.text.toString())
             if (mActionMode != null && !holder.itemView.isSelected) {
-
-                holder.checkBox.isChecked=true
-               holder.itemView.isSelected = true
+                holder.checkBox.isChecked = true
+                holder.itemView.isSelected = true
             } else if (mActionMode != null && holder.itemView.isSelected) {
-                holder.checkBox.isChecked=false
+                holder.checkBox.isChecked = false
                 holder.itemView.isSelected = false
             } else {
                 itemrec.layoutManager = LinearLayoutManager(holder.itemView.context)
@@ -178,7 +172,7 @@ class MyAdapter(
             list = db.readdata()
             notifyDataSetChanged()
             db.close()
-            if(list.size==0){
+            if (list.size == 0) {
                 dayitemrec.visibility = View.GONE
                 add_txt.visibility = View.VISIBLE
             }
