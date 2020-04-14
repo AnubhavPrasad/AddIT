@@ -86,7 +86,7 @@ class TabbedFragment : Fragment() {
                     bottom_sheetdia.findViewById<EditText>(
                         R.id.item_et
                     )?.setText("")
-                    bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
+                    bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setText("")
                     bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_update)?.visibility=View.GONE
                     bottom_sheetdia.findViewById<FloatingActionButton>(R.id.bt_add)?.visibility=View.VISIBLE
                     val datePickerDialog = DatePickerDialog(context!!)
