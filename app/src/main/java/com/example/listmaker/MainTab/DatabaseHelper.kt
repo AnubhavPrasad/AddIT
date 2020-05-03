@@ -89,6 +89,7 @@ class DatabaseHelper(var context: Context) : SQLiteOpenHelper(context,
             res.close()
             db.close()
         }
+        list.reverse()
         return list
 
     }
@@ -157,6 +158,7 @@ class DatabaseHelper(var context: Context) : SQLiteOpenHelper(context,
         }
         res.close()
         db.close()
+        list.reverse()
         return list
     }
 

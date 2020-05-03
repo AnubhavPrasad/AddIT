@@ -120,25 +120,14 @@ class MainPage : Fragment() {
             }
            add_data(db)
         }
-        bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setOnKeyListener { view: View, i: Int, keyEvent: KeyEvent ->
-//            var handler=false
-//            if(event.action==KeyEvent.ACTION_DOWN) {
-//                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//                    add_data(db)
-//                    handler=true
-//                }
+//        bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setOnKeyListener { view: View, i: Int, keyEvent: KeyEvent ->
+//            var holder=false
+//            if (keyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
+//                add_data(db)
+//                holder=true
 //            }
-//            handler
-            if (keyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
-                add_data(db)
-                true
-            } else {
-                false
-            }
-        }
-
-
-
+//            holder
+//        }
         return binding.root
     }
 
@@ -146,9 +135,9 @@ class MainPage : Fragment() {
         itemprice = bottom_sheetdia.findViewById<EditText>(
             R.id.itemprice_add
         )?.text.toString()
-        var item= bottom_sheetdia.findViewById<EditText>(R.id.item_et)?.text.toString()
-        if (itemprice.length > 0||item.length>0) {
-            if(itemprice.length==0){
+        val item= bottom_sheetdia.findViewById<EditText>(R.id.item_et)?.text.toString()
+        if(itemprice!=""||item!=""){
+            if(itemprice.isEmpty()){
                 itemprice="0"
             }
             datelist = db.readdata()
@@ -215,11 +204,10 @@ class MainPage : Fragment() {
             bottom_sheetdia.findViewById<EditText>(
                 R.id.item_et
             )?.setText("")
-
-            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_et)?.setText("")
-            bottom_sheetdia.dismiss()
-
-        } else {
+            bottom_sheetdia.findViewById<EditText>(R.id.itemprice_add)?.setText("")
+            Toast.makeText(context,"Added",Toast.LENGTH_SHORT).show()
+        }
+        else{
             Toast.makeText(context, "Enter Something", Toast.LENGTH_SHORT).show()
         }
 

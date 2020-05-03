@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
+import android.util.SparseBooleanArray
 import android.view.*
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -21,17 +22,16 @@ import com.example.listmaker.R
 lateinit var items: MutableList<ItemData>
 var action_mode: ActionMode? = null
 var mActionMode: ActionMode? = null
+var boolarr = SparseBooleanArray()
+lateinit var multiple_del: MutableList<MultipleDel>
 
 class MyAdapter(
     var list: MutableList<Data>,
     var dialog: AlertDialog.Builder
 
-) : RecyclerView.Adapter<MyAdapter.MyViewHolder>(), ActionMode.Callback {
-    lateinit var monthdel: String
-
+) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     lateinit var itemsdia: Dialog
     lateinit var itemrec: RecyclerView
-    lateinit var multiple_del: MutableList<MultipleDel>
 
 
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
@@ -40,6 +40,7 @@ class MyAdapter(
         val date = itemview.findViewById<TextView>(R.id.date)
         val checkBox = itemview.findViewById<CheckBox>(R.id.bt_check)
         val pie = itemview.findViewById<ImageView>(R.id.pie_image)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -66,15 +67,15 @@ class MyAdapter(
         datelist = db.readdata()
         val limit = db.limitread()
 
-        if (mActionMode == null) {
-            holder.bt.visibility = View.VISIBLE
-            holder.itemView.isSelected = false
-            holder.checkBox.isChecked = false
-            holder.checkBox.visibility = View.GONE
-        } else {
-            holder.bt.visibility = View.INVISIBLE
-            holder.checkBox.visibility = View.VISIBLE
-        }
+//        if (mActionMode == null) {
+//            holder.bt.visibility = View.VISIBLE
+//            holder.checkBox.isChecked = false
+//            holder.itemView.isSelected=false
+//            holder.checkBox.visibility = View.GONE
+//        } else {
+//            holder.bt.visibility = View.INVISIBLE
+//            holder.checkBox.visibility = View.VISIBLE
+//        }
         holder.value.text = "\u20B9 " + list[position].value
         holder.date.text = list[position].date
         if (list[position].value.toInt() > limit.daywise_limit) {
@@ -94,52 +95,54 @@ class MyAdapter(
 
             dialog.show()
         }
+//        holder.checkBox.setOnClickListener {
+//            if(boolarr.valueAt(position)){
+//                boolarr.delete(position)
+//            }
+//            boolarr.put(position, holder.checkBox.isChecked)
+//            if (boolarr[position]) {
+//                holder.itemView.isSelected=true
+//                multiple_del.add(
+//                    MultipleDel(
+//                        datelist[position].date,
+//                        datelist[position].month,
+//                        datelist[position].value
+//                    )
+//                )
+//                holder.checkBox.isChecked = true
+//            } else {
+//                holder.itemView.isSelected=false
+//                multiple_del.remove(
+//                    MultipleDel(
+//                        datelist[position].date,
+//                        datelist[position].month,
+//                        datelist[position].value
+//                    )
+//                )
+//                holder.checkBox.isChecked = false
+//            }
+//        }
         holder.pie.setOnClickListener {
-            if (mActionMode == null) {
+//            if (mActionMode == null) {
                 items = db.readitems(holder.date.text.toString())
                 holder.itemView.findNavController()
                     .navigate(TabbedFragmentDirections.actionTabbedFragmentToPieFragment2(holder.date.text.toString()))
-            }
+//            }
         }
-        holder.itemView.setOnLongClickListener {
-            multiple_del= mutableListOf()
-            val onlong=false
-            if(mActionMode==null){
-                mActionMode=holder.itemView.startActionMode(this)
-                notifyDataSetChanged()
-            }
-            onlong
-        }
-        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                multiple_del.add(
-                    MultipleDel(
-                        list[position].date,
-                        list[position].month,
-                        list[position].value
-                    )
-                )
-                holder.itemView.isSelected = true
-            } else {
-                multiple_del.remove(
-                    MultipleDel(
-                        list[position].date,
-                        list[position].month,
-                        list[position].value
-                    )
-                )
-                holder.itemView.isSelected = false
-            }
-        }
+//        holder.itemView.setOnLongClickListener {
+//            multiple_del = mutableListOf()
+//            boolarr = SparseBooleanArray()
+//            var onlong = false
+//            if (mActionMode == null) {
+//                mActionMode = holder.itemView.startActionMode(this)
+//                notifyDataSetChanged()
+//                onlong = true
+//            }
+//            onlong
+//        }
         holder.itemView.setOnClickListener {
-            items = db.readitems(holder.date.text.toString())
-            if (mActionMode != null && !holder.itemView.isSelected) {
-                holder.checkBox.isChecked = true
-                holder.itemView.isSelected = true
-            } else if (mActionMode != null && holder.itemView.isSelected) {
-                holder.checkBox.isChecked = false
-                holder.itemView.isSelected = false
-            } else {
+            if (mActionMode == null) {
+                items = db.readitems(holder.date.text.toString())
                 itemrec.layoutManager = LinearLayoutManager(holder.itemView.context)
                 itemrec.adapter = ItemsAdapter(
                     items,
@@ -150,8 +153,8 @@ class MyAdapter(
                 itemsdia.show()
             }
         }
-
-        dialog.setPositiveButton("YES") { dialog, _ ->
+        dialog.setPositiveButton("YES")
+        { dialog, _ ->
             for (i in monthlist) {
                 var sum = 0
                 for (j in multiple_del) {
@@ -177,42 +180,43 @@ class MyAdapter(
                 add_txt.visibility = View.VISIBLE
             }
             dialog.dismiss()
-            if (action_mode != null) {
-                action_mode?.finish()
-                action_mode = null
-                mActionMode = null
-            }
+//            if (action_mode != null) {
+//                action_mode?.finish()
+//                action_mode = null
+//                mActionMode = null
+//            }
         }
-        dialog.setNegativeButton("CLOSE") { dialog, _ ->
+        dialog.setNegativeButton("CLOSE")
+        { dialog, _ ->
             dialog.dismiss()
         }
 
     }
 
-    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.sel_del -> {
-                dialog.show()
-
-            }
-        }
-        return true
-    }
-
-    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        mode?.menuInflater?.inflate(R.menu.contextual_menu, menu)
-        action_mode = mode
-        return true
-    }
-
-    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        return false
-    }
-
-    override fun onDestroyActionMode(mode: ActionMode?) {
-        mActionMode = null
-        multiple_del = mutableListOf()
-        notifyDataSetChanged()
-    }
+//    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+//        when (item?.itemId) {
+//            R.id.sel_del -> {
+//                dialog.show()
+//
+//            }
+//        }
+//        return true
+//    }
+//
+//    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+//        mode?.menuInflater?.inflate(R.menu.contextual_menu, menu)
+//        action_mode = mode
+//        return true
+//    }
+//
+//    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+//        return false
+//    }
+//
+//    override fun onDestroyActionMode(mode: ActionMode?) {
+//        mActionMode = null
+//        multiple_del = mutableListOf()
+//        notifyDataSetChanged()
+//    }
 
 }
