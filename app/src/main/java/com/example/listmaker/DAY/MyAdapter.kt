@@ -5,7 +5,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.util.SparseBooleanArray
-import android.view.*
+import android.view.ActionMode
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -124,9 +127,9 @@ class MyAdapter(
 //        }
         holder.pie.setOnClickListener {
 //            if (mActionMode == null) {
-                items = db.readitems(holder.date.text.toString())
-                holder.itemView.findNavController()
-                    .navigate(TabbedFragmentDirections.actionTabbedFragmentToPieFragment2(holder.date.text.toString()))
+            items = db.readitems(holder.date.text.toString())
+            holder.itemView.findNavController()
+                .navigate(TabbedFragmentDirections.actionTabbedFragmentToPieFragment2(holder.date.text.toString()))
 //            }
         }
 //        holder.itemView.setOnLongClickListener {
