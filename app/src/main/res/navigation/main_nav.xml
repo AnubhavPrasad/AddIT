@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_main_page" >
         <action
             android:id="@+id/action_mainPage_to_pieFragment"
-            app:destination="@id/pieFragment" />
+            app:destination="@id/pieFragment"
+            app:enterAnim="@anim/slide_out_down"
+            app:exitAnim="@anim/slide_in_up"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_down" />
     </fragment>
     <fragment
         android:id="@+id/tabbedFragment"
@@ -20,10 +24,17 @@
         android:label="TabbedFragment" >
         <action
             android:id="@+id/action_tabbedFragment_to_graphFrag"
-            app:destination="@id/graphFrag" />
+            app:destination="@id/graphFrag"
+            app:enterAnim="@anim/rtl"
+            app:exitAnim="@anim/ltr"
+            app:popEnterAnim="@anim/pop_rtl"
+            app:popExitAnim="@anim/pop_ltr" />
         <action
             android:id="@+id/action_tabbedFragment_to_pieFragment2"
-            app:destination="@id/pieFragment" />
+            app:destination="@id/pieFragment"
+            app:enterAnim="@anim/slide_out_down"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_up" />
     </fragment>
     <fragment
         android:id="@+id/monthWiseFrag"
@@ -31,7 +42,8 @@
         android:label="MonthWiseFrag" >
         <action
             android:id="@+id/action_monthWiseFrag_to_graphFrag"
-            app:destination="@id/graphFrag" />
+            app:destination="@id/graphFrag"
+            app:enterAnim="@anim/rtl" />
     </fragment>
     <fragment
         android:id="@+id/graphFrag"

@@ -4,8 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/recycler_tem_back"
+    android:clickable="true"
     android:orientation="vertical"
-    android:padding="7dp">
+    android:padding="7dp"
+    android:focusable="true">
 
     <CheckBox
         android:id="@+id/bt_check"
@@ -14,22 +16,26 @@
         android:layout_height="24dp"
         android:visibility="gone"
         />
+
     <ImageView
-        android:src="@drawable/ic_close_black_24dp"
+        android:src="@drawable/close"
         android:id="@+id/bt_delete"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@drawable/bt_back" />
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_width="28dp"
+        android:padding="2dp"
+        android:layout_height="28dp"
+        />
 
     <ImageView
 
         android:id="@+id/pie_image"
-        android:layout_width="45dp"
-        android:layout_height="43dp"
+        android:layout_width="42dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_pie_chart_24dp" />
+        android:src="@drawable/pie2"
+       />
 
     <TextView
         android:id="@+id/date"

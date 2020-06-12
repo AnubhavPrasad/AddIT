@@ -46,7 +46,7 @@ class TabbedFragment : Fragment() {
         binding.maintoolbar.inflateMenu(R.menu.menu)
         val dia_delmonth = AlertDialog.Builder(context)
         dia_delmonth.create()
-        dia_delmonth.setTitle("Delete")
+        dia_delmonth.setTitle("Delete All")
         dia_delmonth.setMessage("Are you sure ?")
         val limit_dialog = Dialog(context!!)
         limit_dialog.setContentView(R.layout.limit_dialog)

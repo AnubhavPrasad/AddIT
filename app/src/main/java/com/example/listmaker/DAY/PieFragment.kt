@@ -30,7 +30,8 @@ class PieFragment : Fragment() {
             pieChart.setDescription("Money Invested:${args.date}")
         }
         pieChart.setDescriptionTextSize(15f)
-        pieChart.holeRadius=8f
+        pieChart.holeRadius=40f
+        pieChart.centerText=args?.date
         pieChart.setHoleColor(Color.WHITE)
         pieChart.transparentCircleRadius=10f
         for(i in 0 until items.size){
