@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@ class MonthAdapter(var alldaysdia: Dialog) : RecyclerView.Adapter<MonthAdapter.M
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         var month = itemview.findViewById<TextView>(R.id.date)
         var value = itemview.findViewById<TextView>(R.id.text)
-        var delete = itemview.findViewById<Button>(R.id.bt_delete)
+        var delete = itemview.findViewById<ImageView>(R.id.bt_delete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

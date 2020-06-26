@@ -35,13 +35,13 @@
             android:textColor="#38468A"
             android:textSize="25sp" />
 
-        <Button
+        <ImageView
             android:id="@+id/bt_delete"
             android:layout_width="60dp"
-            android:layout_height="20dp"
+            android:src="@drawable/trash"
+            android:layout_height="30dp"
             android:layout_weight="0.3"
-            android:background="@drawable/bt_back"
-            android:text="----" />
+            />
     </LinearLayout>
 
 </LinearLayout>

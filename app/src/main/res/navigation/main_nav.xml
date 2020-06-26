@@ -32,9 +32,9 @@
         <action
             android:id="@+id/action_tabbedFragment_to_pieFragment2"
             app:destination="@id/pieFragment"
-            app:enterAnim="@anim/slide_out_down"
-            app:popEnterAnim="@anim/slide_in_up"
-            app:popExitAnim="@anim/slide_out_up" />
+            app:enterAnim="@anim/scale_in"
+            app:launchSingleTop="false"
+            app:popExitAnim="@anim/scale_out" />
     </fragment>
     <fragment
         android:id="@+id/monthWiseFrag"
