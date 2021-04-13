@@ -6,9 +6,7 @@
     <color name="red">#E22323</color>
     <color name="textColor">#111</color>
     <color name="monthstart">#C2B3E3</color>
-    <color name="monthend">#DDC4F8</color>
     <color name="dayback">#F5E2FA</color>
     <color name="holecolor">#fff</color>
     <color name="itemback">#111</color>
-    <color name="daybackpressed">#F1EAF4</color>
 </resources>
