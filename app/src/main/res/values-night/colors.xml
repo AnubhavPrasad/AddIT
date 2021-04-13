@@ -5,7 +5,7 @@
     <color name="colorPrimaryDark">#2F0E51</color>
     <color name="colorAccent">#EEA0BC</color>
     <color name="textColor">#fff</color>
-    <color name="dayback">#5C574F63</color>
+    <color name="dayback">#3B393E</color>
     <color name="monthstart">#29292E</color>
     <color name="monthend">#46414A</color>
     <color name="holecolor">#111</color>
