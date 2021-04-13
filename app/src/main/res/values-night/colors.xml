@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="colorPrimary">#64367C</color>
+    <color name="colorPrimaryDark">#2F0E51</color>
+    <color name="colorAccent">#EEA0BC</color>
+    <color name="textColor">#fff</color>
+    <color name="dayback">#5C574F63</color>
+    <color name="monthstart">#29292E</color>
+    <color name="monthend">#46414A</color>
+    <color name="holecolor">#111</color>
+    <color name="itemback">#fff</color>
+    <color name="daybackpressed">#6BBFACC6</color>
+</resources>

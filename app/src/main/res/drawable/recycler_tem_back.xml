@@ -3,19 +3,19 @@
     <item android:state_selected="true">
         <shape>
             <solid android:color="#BFD6F8" />
-            <corners android:radius="10dp" />
+
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="#F1EAF4" />
-            <corners android:radius="10dp" />
+            <solid android:color="@color/daybackpressed" />
+
         </shape>
     </item>
     <item>
         <shape>
-            <solid android:color="#F5E2FA" />
-            <corners android:radius="10dp" />
+            <solid android:color="@color/dayback" />
+
         </shape>
     </item>
 </selector>

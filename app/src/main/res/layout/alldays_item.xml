@@ -14,7 +14,7 @@
             android:layout_marginEnd="10dp"
             android:padding="3dp"
             android:text="TextView"
-            android:textColor="#111"
+
             android:textStyle="italic"
             android:textSize="12sp" />
 
@@ -26,7 +26,6 @@
             android:layout_marginEnd="10dp"
             android:padding="4dp"
             android:text="TextView"
-            android:textColor="#111"
             android:textStyle="bold"
             android:textSize="18sp" />
 

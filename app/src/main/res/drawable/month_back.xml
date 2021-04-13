@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#C4BEF6" />
     <gradient android:angle="180"
-        android:startColor="#9A98E1"
-        android:endColor="#DDC4F8"/>
+        android:startColor="@color/monthstart"
+        android:endColor="@color/monthend"/>
 
 </shape>

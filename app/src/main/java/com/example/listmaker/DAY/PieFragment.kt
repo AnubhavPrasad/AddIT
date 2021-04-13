@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.listmaker.R
@@ -31,8 +32,9 @@ class PieFragment : Fragment() {
         }
         pieChart.setDescriptionTextSize(15f)
         pieChart.holeRadius=40f
+        pieChart.setCenterTextColor(Color.BLACK)
         pieChart.centerText=args?.date
-        pieChart.setHoleColor(Color.WHITE)
+        pieChart.setHoleColor(ResourcesCompat.getColor(resources,R.color.holecolor,null))
         pieChart.transparentCircleRadius=10f
         for(i in 0 until items.size){
             pientries.add(Entry(items[i].itemprice.toFloat(),i))

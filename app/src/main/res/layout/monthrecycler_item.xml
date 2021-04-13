@@ -15,7 +15,7 @@
         android:layout_marginBottom="7dp"
         android:text="Hello"
         android:textStyle="bold"
-        android:textColor="#38468A"
+
         android:textSize="17sp" />
 
     <LinearLayout
@@ -32,7 +32,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1.7"
             android:text="TextView"
-            android:textColor="#38468A"
+
             android:textSize="25sp" />
 
         <ImageView
